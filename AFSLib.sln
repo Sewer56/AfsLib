@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFSLib", "AFSLib\AFSLib.csproj", "{3C832D62-79DD-49A8-8A60-AC13B5360589}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFSLib.Test", "AFSLib.Test\AFSLib.Test.csproj", "{CD1D7368-7BB6-4E22-9439-9309B3EDEDFF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C832D62-79DD-49A8-8A60-AC13B5360589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C832D62-79DD-49A8-8A60-AC13B5360589}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C832D62-79DD-49A8-8A60-AC13B5360589}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C832D62-79DD-49A8-8A60-AC13B5360589}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD1D7368-7BB6-4E22-9439-9309B3EDEDFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD1D7368-7BB6-4E22-9439-9309B3EDEDFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD1D7368-7BB6-4E22-9439-9309B3EDEDFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD1D7368-7BB6-4E22-9439-9309B3EDEDFF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {291103A6-39C7-4EA3-B434-626CDD9CDA94}
+	EndGlobalSection
+EndGlobal
