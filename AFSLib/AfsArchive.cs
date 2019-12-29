@@ -39,6 +39,22 @@ namespace AFSLib
         }
 
         /// <summary>
+        /// Tries to get an AFS archive from a supplied file viewer.
+        /// </summary>
+        /// <param name="viewer">An existing instance of <see cref="AfsFileViewer"/></param>
+        public static bool FromFileViewer(AfsFileViewer viewer, out AfsArchive archive)
+        {
+            if (viewer.Header->IsAfsArchive)
+            {
+                archive = viewer.ToArchive();
+                return true;
+            }
+
+            archive = new AfsArchive();
+            return false;
+        }
+
+        /// <summary>
         /// Tries to get an AFS archive from supplied data.
         /// Operation fails if file is not an AFS file.
         /// </summary>
@@ -60,14 +76,15 @@ namespace AFSLib
         /// Operation fails if file is not an AFS file.
         /// </summary>
         /// <param name="data">Pointer to the AFS file data.</param>
-        public static bool TryFromMemory(byte* data)
+        public static bool TryFromMemory(byte* data, out AfsArchive archive)
         {
             if (AfsFileViewer.TryFromMemory(data, out var fileViewer))
             {
-                fileViewer.ToArchive();
+                archive = fileViewer.ToArchive();
                 return true;
             }
 
+            archive = new AfsArchive();
             return false;
         }
 
