@@ -14,7 +14,7 @@ namespace AFSLib
     /// <summary>
     /// Allows you to view the contents of AFS files via direct loading (no copying of data).
     /// </summary>
-    public unsafe class AfsFileViewer
+    public unsafe class AfsFileViewer : IDisposable
     {
         /// <summary>
         /// The header of the AFS file.
@@ -36,6 +36,17 @@ namespace AFSLib
 
         private AfsFileViewer() { }
         private AfsFileViewer(byte[] data) => _handle = GCHandle.Alloc(data, GCHandleType.Pinned);
+
+        ~AfsFileViewer()
+        {
+            Dispose();
+        }
+
+        public void Dispose()
+        {
+            _handle?.Free();
+            GC.SuppressFinalize(this);
+        }
 
         /// <summary>
         /// Tries to get an <see cref="AfsFileViewer"/> from supplied data.
