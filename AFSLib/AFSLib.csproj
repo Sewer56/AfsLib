@@ -3,10 +3,26 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Authors>Sewer56</Authors>
+    <Company />
+    <Product />
+    <Description>A simple .NET library for reading and writing CRIWare AFS archives.</Description>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/Sewer56/AfsLib</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Sewer56/AfsLib</RepositoryUrl>
+    <Copyright>MIT</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Reloaded.Memory" Version="2.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
