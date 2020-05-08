@@ -120,7 +120,7 @@ namespace AFSLib
 
             filePointer += sizeof(AfsFileEntry) * Header->NumberOfFiles;
             var metadataEntries = (AfsFileEntry*)filePointer;
-            if (metadataEntries->Length >= 0 && metadataEntries->Offset >= 0)
+            if (metadataEntries->Length > 0 && metadataEntries->Offset > 0)
                 Metadata = new FixedArrayPtr<AfsFileMetadata>((ulong)GetAddress(metadataEntries->Offset), Header->NumberOfFiles);
 
             return true;
