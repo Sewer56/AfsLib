@@ -39,12 +39,12 @@ namespace AFSLib.Test
         {
             var data = File.ReadAllBytes(Assets.RealAfsFile);
             Assert.True(AfsArchive.TryFromFile(data, out var afsArchive));
-            Assert.Equal(2019, afsArchive.Files[2].ArchiveTime.Year);
-            Assert.Equal(8, afsArchive.Files[2].ArchiveTime.Month);
-            Assert.Equal(26, afsArchive.Files[2].ArchiveTime.Day);
-            Assert.Equal(15, afsArchive.Files[2].ArchiveTime.Hour);
-            Assert.Equal(12, afsArchive.Files[2].ArchiveTime.Minute);
-            Assert.Equal(56, afsArchive.Files[2].ArchiveTime.Second);
+            Assert.Equal(2019, afsArchive.Files[2].ArchiveTime?.Year);
+            Assert.Equal(8, afsArchive.Files[2].ArchiveTime?.Month);
+            Assert.Equal(26, afsArchive.Files[2].ArchiveTime?.Day);
+            Assert.Equal(15, afsArchive.Files[2].ArchiveTime?.Hour);
+            Assert.Equal(12, afsArchive.Files[2].ArchiveTime?.Minute);
+            Assert.Equal(56, afsArchive.Files[2].ArchiveTime?.Second);
         }
 
         [Fact]
@@ -58,12 +58,12 @@ namespace AFSLib.Test
 
             Assert.Equal(3, afsArchive.Files.Count);
             Assert.Equal("ChaoDeletThis.png", afsArchive.Files[2].Name);
-            Assert.Equal(2019, afsArchive.Files[2].ArchiveTime.Year);
-            Assert.Equal(8, afsArchive.Files[2].ArchiveTime.Month);
-            Assert.Equal(26, afsArchive.Files[2].ArchiveTime.Day);
-            Assert.Equal(15, afsArchive.Files[2].ArchiveTime.Hour);
-            Assert.Equal(12, afsArchive.Files[2].ArchiveTime.Minute);
-            Assert.Equal(56, afsArchive.Files[2].ArchiveTime.Second);
+            Assert.Equal(2019, afsArchive.Files[2].ArchiveTime?.Year);
+            Assert.Equal(8, afsArchive.Files[2].ArchiveTime?.Month);
+            Assert.Equal(26, afsArchive.Files[2].ArchiveTime?.Day);
+            Assert.Equal(15, afsArchive.Files[2].ArchiveTime?.Hour);
+            Assert.Equal(12, afsArchive.Files[2].ArchiveTime?.Minute);
+            Assert.Equal(56, afsArchive.Files[2].ArchiveTime?.Second);
         }
 
         [Fact]

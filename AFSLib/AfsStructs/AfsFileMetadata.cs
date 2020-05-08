@@ -65,5 +65,32 @@ namespace AFSLib.AfsStructs
         /// The length of the file, in bytes.
         /// </summary>
         public int Length;
+
+        /// <summary>
+        /// True if the file has a timestamp, else false.
+        /// </summary>
+        public bool HasTimeStamp => Year != 0 && Month != 0 && Day != 0 && Hour != 0 && Minute != 0 && Second != 0;
+
+        /// <summary>
+        /// Creates a new AFS file Metadata given the length of the file and the filename.
+        /// </summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <param name="length">Length of the file.</param>
+        /// <param name="timeStamp">(Optional) Archive timestamp.</param>
+        public AfsFileMetadata(string fileName, int length, DateTime? timeStamp) : this()
+        {
+            Length = length;
+            FileName = fileName;
+
+            if (timeStamp != null)
+            {
+                Year = (ushort) timeStamp.Value.Year;
+                Month = (ushort) timeStamp.Value.Month;
+                Day = (ushort) timeStamp.Value.Day;
+                Hour = (ushort) timeStamp.Value.Hour;
+                Minute = (ushort) timeStamp.Value.Minute;
+                Second = (ushort) timeStamp.Value.Second;
+            }
+        }
     }
 }

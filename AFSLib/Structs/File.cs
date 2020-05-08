@@ -18,7 +18,7 @@ namespace AFSLib.Structs
         /// <summary>
         /// The time the file was added into the archive.
         /// </summary>
-        public DateTime ArchiveTime { get; set; }
+        public DateTime? ArchiveTime { get; set; }
 
         /// <summary>
         /// The name of the file, this can be maximum 32 characters including extension.
@@ -65,17 +65,7 @@ namespace AFSLib.Structs
         /// </summary>
         public AfsFileMetadata ToMetadata()
         {
-            return new AfsFileMetadata
-            {
-                FileName = Name,
-                Length = Data.Length,
-                Year = (ushort) ArchiveTime.Year,
-                Month = (ushort) ArchiveTime.Month,
-                Day = (ushort) ArchiveTime.Day,
-                Hour = (ushort) ArchiveTime.Hour,
-                Minute = (ushort) ArchiveTime.Minute,
-                Second = (ushort) ArchiveTime.Second
-            };
+            return new AfsFileMetadata(Name, Data.Length, ArchiveTime);
         }
     }
 }

@@ -90,7 +90,9 @@ namespace AFSLib
                 {
                     Metadata.Value.Get(out var metadata, x);
                     afsFile.Name = metadata.FileName;
-                    afsFile.ArchiveTime = new DateTime(metadata.Year, metadata.Month, metadata.Day, metadata.Hour, metadata.Minute, metadata.Second);
+
+                    if (metadata.HasTimeStamp)
+                        afsFile.ArchiveTime = new DateTime(metadata.Year, metadata.Month, metadata.Day, metadata.Hour, metadata.Minute, metadata.Second);
                 }
 
                 files.Add(afsFile);
