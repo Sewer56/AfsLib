@@ -72,6 +72,26 @@ namespace AFSLib
         }
 
         /// <summary>
+        /// Retrieves the data at the index without reading other portions of the archive.
+        /// 
+        /// Useful if dealing with large AFS files to stream known content indexes without loading the entire AFS file.
+        /// </summary>
+        /// <param name="stream">Stream pointing to AFS archive</param>
+        /// <param name="index">The entry index/audioId inside the AFS</param>
+        public static byte[] SeekToAndLoadDataFromIndex(Stream stream, int index)
+        {
+            var reader = new Reloaded.Memory.Streams.BufferedStreamReader(stream, sizeof(AfsFileEntry));
+            var seekAmount = sizeof(AfsHeader);
+            if (index != 0)
+                seekAmount += sizeof(AfsFileEntry) * index;
+            reader.Seek(seekAmount, SeekOrigin.Begin);
+            var entry = reader.Read<AfsFileEntry>();
+            byte[] result = reader.ReadBytes(entry.Offset, entry.Length);
+            reader.Dispose();
+            return result;
+        }
+
+        /// <summary>
         /// Tries to get an AFS archive from a given pointer.
         /// Operation fails if file is not an AFS file.
         /// </summary>

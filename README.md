@@ -16,6 +16,17 @@ if (AfsFileViewer.TryFromFile(data, out var afsViewer))
 };
 ```
 
+### Reading data from a single entry in an AFS File
+To get the data from a single entry inside an AFS with minimal memory footprint, use the static method:
+```csharp
+AfsArchive.SeekToAndLoadDataFromIndex(stream, index)
+```
+
+
+This will seek through the file and return a byte[] containing just the data at that index.
+This is useful for large AFS with one-off reads.
+
+
 ### Editing an AFS File
 To edit an AFS file, create an instance of `AfsArchive`.
 `AfsArchive` reads all of the data from an `AfsFileViewer`, converting it into a format easier to edit for the end user.

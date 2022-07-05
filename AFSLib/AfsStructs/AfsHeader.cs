@@ -43,7 +43,7 @@ namespace AFSLib.AfsStructs
             for (int x = 0; x < TagLength; x++) 
                 header._tag[x] = 0;
 
-            Memory.CurrentProcess.WriteRaw((IntPtr) header._tag, Encoding.ASCII.GetBytes("AFS"));
+            Memory.CurrentProcess.WriteRaw((nuint) header._tag, Encoding.ASCII.GetBytes("AFS"));
             return header;
         }
 

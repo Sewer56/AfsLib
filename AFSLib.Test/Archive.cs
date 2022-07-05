@@ -85,5 +85,18 @@ namespace AFSLib.Test
             Assert.Equal(1896448, viewer.Entries[2].Offset);
             Assert.Equal(514993, viewer.Entries[2].Length);
         }
+
+        [Fact]
+        public void SeekToAndLoadDataFromIndex()
+        {
+            var fileStream = new FileStream(Assets.RealAfsFile, FileMode.Open);
+            int testIndex = 1;
+            var result = AfsArchive.SeekToAndLoadDataFromIndex(fileStream, testIndex);
+            Assert.Equal(1414255, result.Length);
+            fileStream.Close();
+
+            AfsArchive.TryFromFile(File.ReadAllBytes(Assets.RealAfsFile), out var realAfs);
+            Assert.Equal(realAfs.Files[testIndex].Data, result);
+        }
     }
 }
