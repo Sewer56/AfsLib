@@ -27,7 +27,7 @@ namespace AFSLib.AfsStructs
             set
             {
                 fixed (byte* fileNamePtr = _fileName)
-                    Memory.CurrentProcess.WriteRaw((IntPtr) fileNamePtr, Encoding.ASCII.GetBytes(value));
+                    Memory.CurrentProcess.WriteRaw((nuint) fileNamePtr, Encoding.ASCII.GetBytes(value));
             }
         }
 

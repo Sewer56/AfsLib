@@ -83,7 +83,7 @@ namespace AFSLib
             for (var x = 0; x < Entries.Count; x++)
             {
                 var entry = Entries[x];
-                Memory.CurrentProcess.ReadRaw((IntPtr) GetAddress(entry.Offset), out byte[] data, entry.Length);
+                Memory.CurrentProcess.ReadRaw((nuint) GetAddress(entry.Offset), out byte[] data, entry.Length);
                 var afsFile = new File($"{x}", data);
 
                 if (Metadata != null)
@@ -116,12 +116,12 @@ namespace AFSLib
                 return false;
 
             filePointer += sizeof(AfsHeader);
-            Entries = new FixedArrayPtr<AfsFileEntry>((ulong) filePointer, Header->NumberOfFiles);
+            Entries = new FixedArrayPtr<AfsFileEntry>((UIntPtr) filePointer, Header->NumberOfFiles);
 
             filePointer += sizeof(AfsFileEntry) * Header->NumberOfFiles;
             var metadataEntries = (AfsFileEntry*)filePointer;
             if (metadataEntries->Length > 0 && metadataEntries->Offset > 0)
-                Metadata = new FixedArrayPtr<AfsFileMetadata>((ulong)GetAddress(metadataEntries->Offset), Header->NumberOfFiles);
+                Metadata = new FixedArrayPtr<AfsFileMetadata>((UIntPtr)GetAddress(metadataEntries->Offset), Header->NumberOfFiles);
 
             return true;
         }
