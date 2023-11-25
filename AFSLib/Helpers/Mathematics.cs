@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AFSLib.Helpers
+﻿namespace AFSLib.Helpers
 {
     internal class Mathematics
     {

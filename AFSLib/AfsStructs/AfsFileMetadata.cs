@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Reloaded.Memory;
+using System;
 using System.Runtime.InteropServices;
 using System.Text;
-using Reloaded.Memory.Sources;
 
 namespace AFSLib.AfsStructs
 {
@@ -27,7 +27,7 @@ namespace AFSLib.AfsStructs
             set
             {
                 fixed (byte* fileNamePtr = _fileName)
-                    Memory.CurrentProcess.WriteRaw((nuint) fileNamePtr, Encoding.ASCII.GetBytes(value));
+                    Memory.Instance.WriteRaw((nuint) fileNamePtr, Encoding.ASCII.GetBytes(value));
             }
         }
 

@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
 using AFSLib.AfsStructs;
 using AFSLib.Structs;
 using Reloaded.Memory;
 using Reloaded.Memory.Pointers;
-using Reloaded.Memory.Sources;
 
 namespace AFSLib
 {
@@ -55,7 +52,7 @@ namespace AFSLib
         /// <param name="data">Array containing the AFS data.</param>
         public static bool TryFromFile(byte[] data, out AfsFileViewer afsFileViewer)
         {
-            if (data.Length < Struct.GetSize<AfsHeader>())
+            if (data.Length < sizeof(AfsHeader))
                 throw new Exception("Byte array too small to contain header.");
 
             afsFileViewer = new AfsFileViewer(data);
@@ -82,13 +79,14 @@ namespace AFSLib
 
             for (var x = 0; x < Entries.Count; x++)
             {
-                var entry = Entries[x];
-                Memory.CurrentProcess.ReadRaw((nuint) GetAddress(entry.Offset), out byte[] data, entry.Length);
+                var entry = Entries.Get(x);
+                var data = new byte[entry.Length];
+                Memory.Instance.ReadRaw((nuint) GetAddress(entry.Offset), data);
                 var afsFile = new File($"{x}", data);
 
                 if (Metadata != null)
                 {
-                    Metadata.Value.Get(out var metadata, x);
+                    var metadata = Metadata.Value.Get(x);
                     afsFile.Name = metadata.FileName;
 
                     if (metadata.HasTimeStamp)
@@ -116,12 +114,12 @@ namespace AFSLib
                 return false;
 
             filePointer += sizeof(AfsHeader);
-            Entries = new FixedArrayPtr<AfsFileEntry>((UIntPtr) filePointer, Header->NumberOfFiles);
+            Entries = new FixedArrayPtr<AfsFileEntry>((AfsFileEntry*) filePointer, Header->NumberOfFiles);
 
             filePointer += sizeof(AfsFileEntry) * Header->NumberOfFiles;
             var metadataEntries = (AfsFileEntry*)filePointer;
             if (metadataEntries->Length > 0 && metadataEntries->Offset > 0)
-                Metadata = new FixedArrayPtr<AfsFileMetadata>((UIntPtr)GetAddress(metadataEntries->Offset), Header->NumberOfFiles);
+                Metadata = new FixedArrayPtr<AfsFileMetadata>((AfsFileMetadata*)GetAddress(metadataEntries->Offset), Header->NumberOfFiles);
 
             return true;
         }

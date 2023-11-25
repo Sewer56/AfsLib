@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using Xunit;
 
@@ -29,9 +28,9 @@ namespace AFSLib.Test
             var data = File.ReadAllBytes(Assets.RealAfsFile);
             Assert.True(AfsFileViewer.TryFromFile(data, out var afsFileViewer));
             Assert.NotNull(afsFileViewer.Metadata);
-            Assert.Equal("GottaGoFast.png", afsFileViewer.Metadata.Value[0].FileName);
-            Assert.Equal("Documentation.png", afsFileViewer.Metadata.Value[1].FileName);
-            Assert.Equal("ChaoDeletThis.png", afsFileViewer.Metadata.Value[2].FileName);
+            Assert.Equal("GottaGoFast.png", afsFileViewer.Metadata.Value.Get(0).FileName);
+            Assert.Equal("Documentation.png", afsFileViewer.Metadata.Value.Get(1).FileName);
+            Assert.Equal("ChaoDeletThis.png", afsFileViewer.Metadata.Value.Get(2).FileName);
         }
 
         [Fact]
@@ -40,12 +39,12 @@ namespace AFSLib.Test
             var data = File.ReadAllBytes(Assets.RealAfsFile);
             Assert.True(AfsFileViewer.TryFromFile(data, out var afsFileViewer));
             Assert.NotNull(afsFileViewer.Metadata);
-            Assert.Equal(2019, afsFileViewer.Metadata.Value[2].Year);
-            Assert.Equal(8, afsFileViewer.Metadata.Value[2].Month);
-            Assert.Equal(26, afsFileViewer.Metadata.Value[2].Day);
-            Assert.Equal(15, afsFileViewer.Metadata.Value[2].Hour);
-            Assert.Equal(12, afsFileViewer.Metadata.Value[2].Minute);
-            Assert.Equal(56, afsFileViewer.Metadata.Value[2].Second);
+            Assert.Equal(2019, afsFileViewer.Metadata.Value.Get(2).Year);
+            Assert.Equal(8, afsFileViewer.Metadata.Value.Get(2).Month);
+            Assert.Equal(26, afsFileViewer.Metadata.Value.Get(2).Day);
+            Assert.Equal(15, afsFileViewer.Metadata.Value.Get(2).Hour);
+            Assert.Equal(12, afsFileViewer.Metadata.Value.Get(2).Minute);
+            Assert.Equal(56, afsFileViewer.Metadata.Value.Get(2).Second);
         }
     }
 }

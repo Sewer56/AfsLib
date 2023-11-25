@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Reloaded.Memory;
+using System;
 using System.Runtime.InteropServices;
 using System.Text;
-using Reloaded.Memory.Sources;
 
 namespace AFSLib.AfsStructs
 {
@@ -43,7 +43,7 @@ namespace AFSLib.AfsStructs
             for (int x = 0; x < TagLength; x++) 
                 header._tag[x] = 0;
 
-            Memory.CurrentProcess.WriteRaw((nuint) header._tag, Encoding.ASCII.GetBytes("AFS"));
+            Memory.Instance.WriteRaw((nuint) header._tag, Encoding.ASCII.GetBytes("AFS"));
             return header;
         }
 
