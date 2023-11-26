@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AFSLib.Test
+﻿namespace AFSLib.Test
 {
     public static class Assets
     {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AFSLib.Enums
+﻿namespace AFSLib.Enums
 {
     public enum FileCreationMode
     {

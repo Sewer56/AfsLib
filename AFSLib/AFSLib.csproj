@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
-    <Version>$(VersionPrefix)1.1.0</Version>
+    <Version>$(VersionPrefix)1.1.1</Version>
     <Authors>Sewer56</Authors>
     <Company />
     <Product />
@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Reloaded.Memory" Version="7.0.0" />
+    <PackageReference Include="Reloaded.Memory" Version="9.3.2" />
   </ItemGroup>
 
   <ItemGroup>
