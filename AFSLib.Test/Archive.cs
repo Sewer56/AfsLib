@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using AFSLib.Enums;
 using Xunit;
 
@@ -76,14 +73,14 @@ namespace AFSLib.Test
             Assert.Equal(2048, newData.Length);
             Assert.True(AfsFileViewer.TryFromFile(newData, out var viewer));
 
-            Assert.Equal(2048, viewer.Entries[0].Offset);
-            Assert.Equal(478200, viewer.Entries[0].Length);
+            Assert.Equal(2048, viewer.Entries.Get(0).Offset);
+            Assert.Equal(478200, viewer.Entries.Get(0).Length);
 
-            Assert.Equal(481280, viewer.Entries[1].Offset);
-            Assert.Equal(1414255, viewer.Entries[1].Length);
+            Assert.Equal(481280, viewer.Entries.Get(1).Offset);
+            Assert.Equal(1414255, viewer.Entries.Get(1).Length);
 
-            Assert.Equal(1896448, viewer.Entries[2].Offset);
-            Assert.Equal(514993, viewer.Entries[2].Length);
+            Assert.Equal(1896448, viewer.Entries.Get(2).Offset);
+            Assert.Equal(514993, viewer.Entries.Get(2).Length);
         }
 
         [Fact]

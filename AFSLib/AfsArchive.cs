@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
 using AFSLib.AfsStructs;
 using AFSLib.Enums;
-using AFSLib.Helpers;
 using AFSLib.Structs;
-using Reloaded.Memory;
+using Reloaded.Memory.Extensions;
 using static AFSLib.Helpers.Mathematics;
 using File = AFSLib.Structs.File;
 
@@ -80,15 +77,12 @@ namespace AFSLib
         /// <param name="index">The entry index/audioId inside the AFS</param>
         public static byte[] SeekToAndLoadDataFromIndex(Stream stream, int index)
         {
-            var reader = new Reloaded.Memory.Streams.BufferedStreamReader(stream, sizeof(AfsFileEntry));
-            var seekAmount = sizeof(AfsHeader);
-            if (index != 0)
-                seekAmount += sizeof(AfsFileEntry) * index;
-            reader.Seek(seekAmount, SeekOrigin.Begin);
-            var entry = reader.Read<AfsFileEntry>();
-            byte[] result = reader.ReadBytes(entry.Offset, entry.Length);
-            reader.Dispose();
-            return result;
+            stream.Seek(sizeof(AfsHeader) + (sizeof(AfsFileEntry) * index), SeekOrigin.Begin);
+            stream.Read(out AfsFileEntry entry);
+            var data = new byte[entry.Length];
+            stream.Seek(entry.Offset, SeekOrigin.Begin);
+            stream.Read(data, 0, entry.Length);
+            return data;
         }
 
         /// <summary>
@@ -116,19 +110,19 @@ namespace AFSLib
         public byte[] ToBytes(int alignment = 2048, FileCreationMode creationMode = FileCreationMode.CreateWithMetadata)
         {
             var sizes = new FileSizes(this, alignment, creationMode);
-            var bytes = new ExtendedMemoryStream(sizes.FileSize);
+            var bytes = new MemoryStream(sizes.FileSize);
             
             // Add Identification Header.
-            bytes.Append(AfsHeader.FromNumberOfFiles(Files.Count));
+            bytes.Write(AfsHeader.FromNumberOfFiles(Files.Count));
 
             // Add file entries.
             int currentOffset = sizes.FileOffset;
-            bytes.Append(Files.Select(x =>
+            bytes.Write(Files.Select(x =>
             {
                 var fileEntry = new AfsFileEntry(currentOffset, x.Data.Length);
                 currentOffset = RoundUp(currentOffset + x.Data.Length, alignment);
                 return fileEntry;
-            }).ToArray());
+            }).ToArray().AsSpan());
 
             // If only header wanted, return from here.
             if (creationMode == FileCreationMode.CreateHeaderOnly)
@@ -139,20 +133,20 @@ namespace AFSLib
 
             // Add Metadata if Requested
             if (creationMode == FileCreationMode.CreateWithMetadata)
-                bytes.Append(new AfsFileEntry(currentOffset, sizes.MetadataSize));
+                bytes.Write(new AfsFileEntry(currentOffset, sizes.MetadataSize));
 
             bytes.AddPadding(alignment);
 
             // Add files.
             foreach (var file in Files)
             {
-                bytes.Append(file.Data);
+                bytes.Write(file.Data.AsSpan());
                 bytes.AddPadding(alignment);
             }
 
             // Write File Metadata
             if (creationMode == FileCreationMode.CreateWithMetadata)
-                bytes.Append(Files.Select(x => x.ToMetadata()).ToArray());
+                bytes.Write(Files.Select(x => x.ToMetadata()).ToArray().AsSpan());
 
             bytes.AddPadding(alignment);
             return bytes.ToArray();
